@@ -12,14 +12,119 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body ng-controller="posts">
   <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo center">Reddit Clone</a>
     </div>
   </nav>
-  <div class="posts row" ng-controller="posts">
-    
+  <div class="row">
+    <div class="col s12">
+      <div class="col s2">
+        <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Sort by:</a>
+        <ul id='dropdown1' class='dropdown-content'>
+          <li><a href="#!" ng-click="sVotes=true; sDate=false; sTitle = false">votes</a></li>
+          <li><a href="#!" ng-click="sDate=true; sVotes=false; sTitle=false">date</a></li>
+          <li><a href="#!" ng-click="sTitle=true; sDate=false; sVotes=false">title</a></li>
+        </ul>
+      </div>
+      <input class="col s5" type="text" placeholder="Search"></input>
+      <button type="button" name="button" ng-click="newPost=true" ng-hide="newPost==true" ng-show="hidePost==true">New</button>
+      <button type="button" name="button" ng-click="hidePost=true; newPost=false" ng-show="newPost==true" ng-hide="hidePost==true">Hide</button>
+    </div>
+  </div>
+  <div class="row" ng-show="newPost==true">
+    <div class="col s12">
+      <h3>Create a New Post!</h3>
+      <input class="col s5" type="text" placeholder="Title" ng-model="title" ng-class="{invalid: noTitle == true}"></input>
+      <input class="col s5" type="text" placeholder="Author" ng-model="author" ng-class="{invalid: noAuthor == true}"></input>
+      <input class="col s5" type="text" placeholder="Image" ng-model="img" ng-class="{invalid: noImg == true}"></input>
+      <input class="col s5" type="text" placeholder="Description" ng-model="desc" ng-class="{invalid: noDesc == true}"></input>
+      <button type="button" name="button" ng-click="validate()">Submit</button>
+    </div>
+  </div>
+  <br>
+  <div class="posts container">
+    <div class="row" ng-show="sDate==true" ng-hide="sDate==false" ng-repeat="post in posts| orderBy: '-date'">
+      <div class="col s3">
+        <img ng-src="{{post.img}}" />
+      </div>
+      <div class="col s9">
+        <h3>{{post.title}}</h3> by: {{post.author}}
+        <p>{{post.description}}</p>
+        <div class="col s12">
+          {{post.date | date}}
+          <button ng-click="post.up = post.up+1">up</button>
+          {{post.up}}
+          <button ng-click="post.down = post.down+1">down</button>
+          {{post.down}}
+          <a href="#!" ng-click="view=true" ng-show="view==false" ng-hide="view==true">View Comments</a>
+          <a href="#!" ng-hide="view==false" ng-show="view==true" ng-click="view=false">Hide Comments</a>
+          <a href="#!" ng-click="vm.add=true" ng-show="vm.add==false" ng-hide="vm.add==true">Add Comment</a>
+          <a href="#!" ng-click="vm.add=false" ng-show="vm.add==true" ng-hide="vm.add==false">Nevermind</a>
+        </div>
+        <div class="col s12" ng-show="vm.add"  >
+          <h3>Create a New Comment!</h3>
+          <input class="col s5" type="text" placeholder="Author" ng-model="cAuth" ng-class="{invalid: cNoAuth == true}"></input>
+          <input class="col s5" type="text" placeholder="Write something here..." ng-model="cComment" ng-class="{invalid: cNoComment == true}"></input>
+          <button type="button" name="button" ng-click="cValidate(post.id, cAuth, cComment); cAuth=undefined; cComment=undefined" >Submit</button>
+        </div>
+        <div ng-show="view==true" ng-hide="view==false" ng-repeat="comment in post.comments">
+          <h5>{{comment.author}}</h5>
+          <p>
+            {{comment.comment}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="sVotes==true" ng-hide="sVotes==false" ng-repeat="post in posts| orderBy: '-up'">
+      <div class="col s3">
+        <img ng-src="{{post.img}}" />
+      </div>
+      <div class="col s9">
+        <h3>{{post.title}}</h3> by: {{post.author}}
+        <p>{{post.description}}</p>
+        <div class="col s12">
+          {{post.date | date}}
+          <button ng-click="post.up = post.up+1">up</button>
+          {{post.up}}
+          <button ng-click="post.down = post.down+1">down</button>
+          {{post.down}}
+          <a href="#!" ng-click="view=true" ng-show="view==false" ng-hide="view==true">View Comments</a>
+          <a href="#!" ng-hide="view==false" ng-show="view==true" ng-click="view=false">Hide Comments</a>
+        </div>
+        <div ng-show="view==true" ng-hide="view==false" ng-repeat="comment in post.comments">
+          <h5>{{comment.author}}</h5>
+          <p>
+            {{comment.comment}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="sTitle==true" ng-hide="sTitle==false" ng-repeat="post in posts| orderBy: 'title'">
+      <div class="col s3">
+        <img ng-src="{{post.img}}" />
+      </div>
+      <div class="col s9">
+        <h3>{{post.title}}</h3> by: {{post.author}}
+        <p>{{post.description}}</p>
+        <div class="col s12">
+          {{post.date | date}}
+          <button ng-click="post.up = post.up+1">up</button>
+          {{post.up}}
+          <button ng-click="post.down = post.down+1">down</button>
+          {{post.down}}
+          <a href="#!" ng-click="view=true" ng-show="view==false" ng-hide="view==true">View Comments</a>
+          <a href="#!" ng-hide="view==false" ng-show="view==true" ng-click="view=false">Hide Comments</a>
+        </div>
+        <div ng-show="view==true" ng-hide="view==false" ng-repeat="comment in post.comments">
+          <h5>{{comment.author}}</h5>
+          <p>
+            {{comment.comment}}
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 
