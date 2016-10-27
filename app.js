@@ -21,18 +21,16 @@ app.controller('posts', function($scope) {
   date: new Date(),
   votes: 2,
   comments: []
- },
- {
-   id: 1,
-   title: 'Lily Pads by Monet',
-   author: 'Anna Baldwin',
-   img: 'https://fpsbutest.files.wordpress.com/2012/12/tumblr_m5vezabvga1rwb7i1o1_500.jpg',
-   description: `Oops...told my friend Lisa that this was by Picasso, but it's actually by Monet like in the Titanic. Like Lisa said, there's absolutely nothing geometric about this. But yeah...it's my favorite.`,
-   date: new Date(),
-   votes: 30,
-   comments: []
- },
- {
+ }, {
+  id: 1,
+  title: 'Lily Pads by Monet',
+  author: 'Anna Baldwin',
+  img: 'https://fpsbutest.files.wordpress.com/2012/12/tumblr_m5vezabvga1rwb7i1o1_500.jpg',
+  description: `Oops...told my friend Lisa that this was by Picasso, but it's actually by Monet like in the Titanic. Like Lisa said, there's absolutely nothing geometric about this. But yeah...it's my favorite.`,
+  date: new Date(),
+  votes: 30,
+  comments: []
+ }, {
   id: 2,
   title: 'Loose Lips',
   author: 'Lisa Ma',
@@ -59,9 +57,8 @@ app.controller('posts', function($scope) {
   date: new Date(),
   votes: 10,
   comments: []
-},
-{
-  id:5,
+ }, {
+  id: 5,
   title: 'Two-faced',
   author: 'Lisa Ma',
   img: 'img/thing.jpg',
@@ -69,9 +66,8 @@ app.controller('posts', function($scope) {
   date: new Date(),
   votes: 5,
   comments: []
-},
-{
-  id:6,
+ }, {
+  id: 6,
   title: 'Dots to Lines Tattoo',
   author: 'Gordon Graham',
   img: 'http://inflictinginktattoo.com/wp-content/uploads/2014/07/dot-to-lines-tattoos.png',
@@ -79,7 +75,7 @@ app.controller('posts', function($scope) {
   date: new Date(),
   votes: 2,
   comments: []
-}];
+ }];
 
  $scope.comments = [{
   post_id: 0,
@@ -90,13 +86,9 @@ app.controller('posts', function($scope) {
   author: 'Matt Works',
   comment: `Shut up Lisa. I was an art student. You don't know what you're talking about. #stop #art #blessed`
  }, {
-  post_id: 2,
+  post_id: 3,
   author: 'Courtney Sanders',
   comment: 'Ughhhh...a freaking god. *gasp* DOG IS GOD SPELLED BACKWARDS.'
- }, {
-  post_id: 3,
-  author: 'Lisa Ma',
-  comment: 'om nom nom nom nom nom'
  }];
  for (var i = 0; i < $scope.posts.length; i++) {
   for (var c = 0; c < $scope.comments.length; c++) {
@@ -169,7 +161,15 @@ app.controller('posts', function($scope) {
     author: author,
     comment: comment
    }
-   $scope.posts[p_id].comments.push(obj);
+   var elem;
+   for(var i = 0; i < $scope.posts.length; i++){
+     var theId = $scope.posts[i].id;
+     if(theId === p_id){
+       elem = i;
+     }
+   }
+   $scope.posts[elem].comments.push(obj);
+   $scope.view = true;
    $scope.vm.add = false;
   }
  }
@@ -202,14 +202,13 @@ app.controller('posts', function($scope) {
   }
  }
  $scope.$watch('searchTxt', function(val) {
-   if(val == undefined){
-     val = '';
-   }
+  if (val == undefined) {
+   val = '';
+  }
   val = val.toLowerCase();
   $scope.posts = $scope.vm.posts.filter(function(obj) {
-   return obj.title.toLowerCase().indexOf(val) != -1 || obj.description.toLowerCase().indexOf(val)!=-1;
+   return obj.title.toLowerCase().indexOf(val) != -1 || obj.description.toLowerCase().indexOf(val) != -1;
   });
-  console.log($scope.type);
   $scope.sortBy($scope.type);
  });
 });

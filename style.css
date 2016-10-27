@@ -22,10 +22,7 @@ nav{
   background-color:rgb(107, 209, 16);
 }
 .btn-floating.btn-large.redder i{
-  background-color:rgb(107, 209, 16);
-}
-.btn-floating i{
-  background-color:rgb(107, 209, 16);
+  background-color:red;
 }
 img{
   width:100%;
@@ -57,23 +54,10 @@ input[type=text].sort{
   transition: all 0.5s linear;
   opacity: 0;
 }
-
-/*
- The ng-enter-active and ng-move-active
- are where the transition destination properties
- are set so that the animation knows what to
- animate.
-*/
 .repeated-item.ng-enter.ng-enter-active,
 .repeated-item.ng-move.ng-move-active {
   opacity: 1;
 }
-
-/*
-  We're using CSS keyframe animations for when
-  the leave event is triggered for the element
-  that has the .repeated-item class
-*/
 .repeated-item.ng-leave {
   animation: 0.5s my_animation;
 }
