@@ -10,7 +10,7 @@ $(document).ready(function() {
  });
  $('#textarea').trigger('autoresize');
 })
-var app = angular.module('reddit', ['angularGrid', 'angularMoment', 'ngAnimate']);
+var app = angular.module('artshare', ['angularGrid', 'angularMoment', 'ngAnimate']);
 app.controller('posts', function($scope) {
  $scope.posts = [{
   id: 0,
