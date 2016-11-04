@@ -9,5 +9,8 @@ I am using a **Materialize** framework to make it look pretty along with **s-yad
 
 ###Features
 1. A basic grid layout with search and sorting functionalities. You can sort by date, votes, or title.
+<img src = "demo_img/overview.png"/>
 2. Each post contains an image, a title, the author, a description, upvote and downvote functionality. It allows you to view comments and also add comments.
+<img src = "demo_img/card.png"/>
 3. You are also able to create a post.
+<img src = "demo_img/create_post.png"/>
